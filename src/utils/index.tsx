@@ -3,9 +3,6 @@ import ky from "ky";
 export const GET_OG_CONTENT = ["og:title", "og:image", "og:description"];
 
 export const getHtml = (url: string) => {
-  if (!url) {
-    return;
-  }
   return ky
     .get(
       // "https://www.bilibili.com/video/BV1GP4y1y78F/?spm_id_from=333.788.recommend_more_video.0"
