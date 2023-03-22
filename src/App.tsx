@@ -29,10 +29,10 @@ function App() {
   useEffect(() => {
     getLinkPreview(
       // "https://www.bilibili.com/video/BV1GP4y1y78F/?spm_id_from=333.788.recommend_more_video.0"
-      // "https://www.bilibili.com/video/BV1GP4y1y78F/?spm_id_from=333.788.recommend_more_video.0"
+      "https://www.bilibili.com/video/BV1GP4y1y78F/?spm_id_from=333.788.recommend_more_video.0"
       // "https://play.tudou.com/v_show/id_XNTk0NDkwOTMyMA==.html?spm=a2hex.20746969_WEBHOME_GRAY.drawer2.d_zj1_2&scm=20140719.manual.25359.video_XNTk0NDkwOTMyMA%3D%3D&playMode=pugv"
       // "https://v.qq.com/x/cover/mzc00200auwca9q/r0045mxxntl.html"
-      "https://www.youtube.com/watch?v=0fYi8SGA20k"
+      // "https://www.youtube.com/watch?v=0fYi8SGA20k"
       // "https://developer.mozilla.org/zh-CN/docs/Web/API/DOMParser"
     ).then((res) => {
       console.log("res", res);
@@ -44,6 +44,9 @@ function App() {
     <div
       className="popup"
       css={css`
+        height: 800px;
+        width: 500px;
+
         .img {
           height: 240px;
           width: 320px;
@@ -51,7 +54,7 @@ function App() {
         }
       `}
     >
-      {value && <PreviewUrl data={value} />}
+      {value ? <PreviewUrl data={value} /> : <>loading...</>}
       {/* <input
         type="text"
         // value={url}

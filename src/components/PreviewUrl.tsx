@@ -32,16 +32,48 @@ export default function PreviewUrl({ data, ...props }: PreviewUrlProps) {
     <div
       {...props}
       css={css`
-        height: 800px;
-        width: 500px;
+        .header {
+          display: grid;
+          grid-template-columns: 400px 50px;
+          align-items: center;
+        }
+
+        .title {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin: 0;
+        }
+
+        .description {
+          width: 100%;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .favicon {
+          height: 20px;
+          width: 20px;
+          object-fit: cover;
+        }
+
+        .previewImg {
+          height: 200px;
+          width: 100%;
+          object-fit: contain;
+        }
       `}
     >
-      <h4>
-        {data?.title}
-        <img src={data?.favicons?.[0]} alt="" />
-      </h4>
-      <p>{data?.description}</p>
-      <img src={data?.images?.[0]} alt="" />
+      <a href={data?.url} target="_blank">
+        <header className="header">
+          <h4 className="title">{data?.title}</h4>
+          <img src={data?.favicons?.[0]} alt="favicon" className="favicon" />
+        </header>
+        <p className="description">{data?.description}</p>
+        <img src={data?.images?.[0]} alt="previewImg" className="previewImg" />
+      </a>
     </div>
   );
 }
