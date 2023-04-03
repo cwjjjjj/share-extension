@@ -8,7 +8,7 @@
   },
   "name": "NaviTab-侧边栏树状Tab管理",
   "version": "1.1.0",
-  "action": { "default_popup": "index.html" },
+  "action": { "default_popup": "src/test-colink/dist/index.html" },
   "content_scripts": [
     {
       "js": ["src/content/index.tsx"],
