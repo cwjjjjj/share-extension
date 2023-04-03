@@ -70,7 +70,7 @@ function App() {
     <MemoryRouter basename="/">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Login />} />
+          <Route path="login" element={<Login />} />
           <Route path="explore" element={<Explore />} />
           <Route path="mine" element={<Mine />} />
           <Route path="follow" element={<Follow />} />

@@ -2,6 +2,10 @@ import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 
 const MENU_LIST = [
+  //   {
+  //     name: "login",
+  //     to: "login",
+  //   },
   {
     name: "关注",
     to: "follow",
@@ -35,7 +39,6 @@ export default function Meun() {
       `}
     >
       {MENU_LIST.map((item) => {
-        console.log("item", item);
         return (
           <div
             onClick={() => {

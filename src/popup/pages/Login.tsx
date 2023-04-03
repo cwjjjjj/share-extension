@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
+import { get } from "../utils";
 
 export default function Login() {
   const navigator = useNavigate();
@@ -18,6 +19,13 @@ export default function Login() {
       >
         to mine
       </button>
+      <div
+        onClick={() => {
+          get("123");
+        }}
+      >
+        test
+      </div>
     </div>
   );
 }
