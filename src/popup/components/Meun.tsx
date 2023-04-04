@@ -45,6 +45,7 @@ export default function Meun() {
               navigator(`./${item.to}`);
             }}
             className="menu"
+            key={item.to}
           >
             {item.name}
           </div>
