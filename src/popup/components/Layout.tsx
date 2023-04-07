@@ -6,7 +6,6 @@ export default function Layout() {
   return (
     <div
       css={css`
-        color: red;
         height: 600px;
         width: 400px;
         padding: 5px;

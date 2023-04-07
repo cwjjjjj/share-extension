@@ -1,3 +1,9 @@
+import Post from "../components/Post";
 export default function Explore() {
-  return <div>Explore</div>;
+  return (
+    <div>
+      <Post />
+      <hr />
+    </div>
+  );
 }

@@ -64,6 +64,7 @@ import Mine from "./pages/Mine";
 import Explore from "./pages/Explore";
 import Follow from "./pages/Follow";
 import Login from "./pages/Login";
+import User from "./pages/User";
 
 function App() {
   return (
@@ -74,6 +75,8 @@ function App() {
           <Route path="explore" element={<Explore />} />
           <Route path="mine" element={<Mine />} />
           <Route path="follow" element={<Follow />} />
+          {/* path="user/:id/:name" */}
+          <Route path="user/:id/:name" element={<User />} />
         </Route>
       </Routes>
     </MemoryRouter>
