@@ -1,10 +1,13 @@
 import Axios, { AxiosError, AxiosRequestConfig } from "axios";
 import axios from "axios";
+import buildHost from "./buildHost";
+
+export const COLINK_HOST = "https://colink.codefuture.top/";
 
 export const ACCESS_TOKEN_KEY = "x-jike-access-token";
 export const REFRESH_TOKEN_KEY = "x-jike-refresh-token";
-export const BASE_URL = "https://www.baidu.com";
-export const HOST = "";
+export const HOST = buildHost(COLINK_HOST);
+export const BASE_URL = `${HOST}v1`;
 
 export const axiosInstance = Axios.create({
   withCredentials: true,

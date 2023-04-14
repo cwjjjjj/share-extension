@@ -1,8 +1,10 @@
 import { css } from "@emotion/react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Meun from "./Meun";
+import { Button } from "antd-mobile";
 
 export default function Layout() {
+  const navigator = useNavigate();
   return (
     <div
       css={css`
@@ -16,6 +18,16 @@ export default function Layout() {
           height: calc(100% - 30px);
         `}
       >
+        <header>
+          {import.meta.env.VITE_DEV_ENV}
+          <Button
+            onClick={() => {
+              navigator("./login");
+            }}
+          >
+            login
+          </Button>
+        </header>
         <Outlet />
       </main>
       <Meun />
