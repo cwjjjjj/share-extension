@@ -6,10 +6,7 @@ import { useEffect } from "react";
 export default function Follow() {
   return (
     <div>
-      <header>
-        <SharePopup />
-      </header>
-
+      follow
       <main>内容</main>
     </div>
   );

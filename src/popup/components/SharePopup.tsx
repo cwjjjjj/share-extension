@@ -7,6 +7,8 @@ import { getCurrentTab } from "../utils/getCurrentTab";
 import { getLinkPreview } from "link-preview-js";
 import { UrlData } from "./PreviewUrl";
 import { css } from "@emotion/react";
+import { post } from "../utils";
+import { CREATE_POST } from "../constants/api";
 
 export interface SharePopupProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -33,13 +35,13 @@ export default ({ children, ...props }: SharePopupProps) => {
 
   return (
     <div>
-      <button
+      <Button
         onClick={() => {
           setVisible(true);
         }}
       >
         share
-      </button>
+      </Button>
       <CenterPopup
         visible={visible}
         onMaskClick={() => {
@@ -73,6 +75,20 @@ export default ({ children, ...props }: SharePopupProps) => {
             <Image src={currentTabInfo.images[0]} fit="contain" />
           )}
         </div>
+        <Button
+          onClick={() => {
+            post(CREATE_POST, {
+              post: {
+                url: currentTabInfo.url,
+                title: currentTabInfo.title,
+                summary: currentTabInfo.description,
+                image: currentTabInfo?.images?.[0],
+              },
+            });
+          }}
+        >
+          确定分享
+        </Button>
       </CenterPopup>
     </div>
   );

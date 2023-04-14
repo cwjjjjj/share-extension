@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Meun from "./Meun";
 import { Button } from "antd-mobile";
+import SharePopup from "./SharePopup";
 
 export default function Layout() {
   const navigator = useNavigate();
@@ -27,6 +28,9 @@ export default function Layout() {
           >
             login
           </Button>
+        </header>
+        <header>
+          <SharePopup />
         </header>
         <Outlet />
       </main>
