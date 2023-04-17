@@ -1,7 +1,14 @@
 import { css } from "@emotion/react";
 import UserSmallCard from "../components/UserSmallCard";
 import { SetOutline } from "antd-mobile-icons";
+import { useEffect } from "react";
+import { get, post } from "../utils";
+import { POST_LIST } from "../constants/api";
+
 export default function Mine() {
+  useEffect(() => {
+    get(POST_LIST, { params: { limit: 10 } });
+  }, []);
   return (
     <div
       css={css`
