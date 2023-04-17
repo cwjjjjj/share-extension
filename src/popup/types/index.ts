@@ -7,3 +7,8 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface CreatePost extends Partial<Post> {
+  url: string;
+  title: string;
+}

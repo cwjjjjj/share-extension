@@ -9,6 +9,7 @@ import { UrlData } from "./PreviewUrl";
 import { css } from "@emotion/react";
 import { post } from "../utils";
 import { CREATE_POST } from "../constants/api";
+import { CreatePost } from "../types";
 
 export interface SharePopupProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -78,12 +79,10 @@ export default ({ children, ...props }: SharePopupProps) => {
         <Button
           onClick={() => {
             post(CREATE_POST, {
-              post: {
-                url: currentTabInfo.url,
-                title: currentTabInfo.title,
-                summary: currentTabInfo.description,
-                image: currentTabInfo?.images?.[0],
-              },
+              url: currentTabInfo.url,
+              title: currentTabInfo.title,
+              summary: currentTabInfo.description,
+              image: currentTabInfo?.images?.[0],
             });
           }}
         >
