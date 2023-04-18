@@ -9,9 +9,17 @@ export interface Post {
   viewed: number;
 }
 
+export interface User {
+  id: string;
+  // 内部用户
+  isBeta: boolean;
+}
+
 export interface CreatePost extends Partial<Post> {
   url: string;
   title: string;
 }
 
-export type PostWithUserId = Post & { user: { id: string } };
+export type PostWithUser = Post & {
+  user: User;
+};

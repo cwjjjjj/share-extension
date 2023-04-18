@@ -2,10 +2,10 @@ import { css } from "@emotion/react";
 import UserSmallCard, { MOCK_IMG } from "./UserSmallCard";
 import { Popover } from "antd-mobile";
 import { HTMLAttributes } from "react";
-import { PostWithUserId } from "../types";
+import { PostWithUser } from "../types";
 
 export interface PostProps extends HTMLAttributes<HTMLDivElement> {
-  data: PostWithUserId;
+  data: PostWithUser;
 }
 
 export default function Post({ data, ...props }: PostProps) {
@@ -18,22 +18,29 @@ export default function Post({ data, ...props }: PostProps) {
   return (
     <div
       css={css`
-        .header {
+        .user-header {
           display: grid;
-          grid-template-columns: 1fr 30px;
+          grid-template-columns: 200px 30px;
+          justify-content: space-between;
           align-items: center;
+          justify-items: start;
         }
         .more {
           cursor: pointer;
+          justify-self: center;
         }
         .img {
           width: 100%;
           height: 200px;
           object-fit: contain;
         }
+        p,
+        h5 {
+          margin: 0;
+        }
       `}
     >
-      <header className="header">
+      <header className="user-header">
         <UserSmallCard />
         <Popover
           content={
@@ -55,7 +62,7 @@ export default function Post({ data, ...props }: PostProps) {
           }
           trigger="click"
           placement="right"
-          defaultVisible
+          defaultVisible={false}
         >
           <div className="more">···</div>
         </Popover>

@@ -19,7 +19,7 @@ export default function Layout() {
           height: calc(100% - 30px);
         `}
       >
-        <header>
+        {/* <header>
           {import.meta.env.VITE_DEV_ENV}
           <Button
             onClick={() => {
@@ -28,10 +28,10 @@ export default function Layout() {
           >
             login
           </Button>
-        </header>
-        <header>
+        </header> */}
+        {/* <header>
           <SharePopup />
-        </header>
+        </header> */}
         <Outlet />
       </main>
       <Meun />
