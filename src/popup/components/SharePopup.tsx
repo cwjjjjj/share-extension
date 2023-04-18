@@ -64,6 +64,7 @@ export default ({ children, ...props }: SharePopupProps) => {
               height: 20px;
               width: 20px;
             `}
+            // @ts-ignore
             src={currentTabInfo?.favIconUrl ?? currentTabInfo?.favicons?.[0]}
             alt=""
           />

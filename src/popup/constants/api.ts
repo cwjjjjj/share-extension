@@ -13,3 +13,5 @@ export const SUBSCRIBE = "subscribe/create";
 export const SUBSCRIBE_LIST = "subscribe/list";
 
 export const SUBSCRIBE_REMOVE = "subscribe/remove";
+
+export const USER_PROFILE = "user/profile";

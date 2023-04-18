@@ -1,7 +1,20 @@
 import { css } from "@emotion/react";
 import UserSmallCard, { MOCK_IMG } from "./UserSmallCard";
 import { Popover } from "antd-mobile";
-export default function Post() {
+import { HTMLAttributes } from "react";
+import { PostWithUserId } from "../types";
+
+export interface PostProps extends HTMLAttributes<HTMLDivElement> {
+  data: PostWithUserId;
+}
+
+export default function Post({ data, ...props }: PostProps) {
+  const { user } = data ?? {};
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <div
       css={css`

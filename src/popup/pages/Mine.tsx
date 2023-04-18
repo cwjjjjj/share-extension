@@ -1,14 +1,22 @@
 import { css } from "@emotion/react";
 import UserSmallCard from "../components/UserSmallCard";
 import { SetOutline } from "antd-mobile-icons";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { get, post } from "../utils";
 import { POST_LIST } from "../constants/api";
+import useLoadMoreScrollDetect from "../hooks/useLoadMoreScrollDetect";
+import { Post as PostType, PostWithUserId } from "../types";
+import Post from "../components/Post";
 
 export default function Mine() {
+  const [data, setData] = useState<PostWithUserId[]>([]);
+  const { ref, onScroll } = useLoadMoreScrollDetect();
   useEffect(() => {
-    get(POST_LIST, { params: { limit: 10 } });
+    get(POST_LIST)
+      .then((res) => res.data)
+      .then((data) => setData(data.data));
   }, []);
+
   return (
     <div
       css={css`
@@ -42,6 +50,17 @@ export default function Mine() {
           <SetOutline />
         </div>
       </header>
+      <div ref={ref} onScroll={onScroll}>
+        {data.map((item) => {
+          console.log("data", data);
+          return (
+            <div key={item.id}>
+              {item.user.id}
+              <Post data={item} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
