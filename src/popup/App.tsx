@@ -71,12 +71,11 @@ function App() {
     <MemoryRouter basename="/">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="login" element={<Login />} />
+          <Route index element={<Login />} />
           <Route path="explore" element={<Explore />} />
           <Route path="mine" element={<Mine />} />
           <Route path="follow" element={<Follow />} />
-          {/* path="user/:id/:name" */}
-          <Route index element={<User />} />
+          <Route path="user/:id/:name" element={<User />} />
         </Route>
       </Routes>
     </MemoryRouter>
