@@ -7,6 +7,9 @@ export default function Follow() {
   return (
     <div>
       follow
+      <header>
+        <SharePopup />
+      </header>
       <main>内容</main>
     </div>
   );

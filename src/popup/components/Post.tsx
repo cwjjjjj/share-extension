@@ -28,6 +28,7 @@ export default function Post({ data, renderMore, ...props }: PostProps) {
           justify-content: space-between;
           align-items: center;
           justify-items: start;
+          white-space: nowrap;
         }
         .more {
           cursor: pointer;
@@ -41,9 +42,11 @@ export default function Post({ data, renderMore, ...props }: PostProps) {
         p,
         h5 {
           margin: 0;
+          padding: 4px 0;
         }
         main {
           cursor: pointer;
+          margin: 0 0 10px 0;
         }
       `}
       {...props}

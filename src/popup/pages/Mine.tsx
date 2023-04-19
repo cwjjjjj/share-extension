@@ -39,6 +39,7 @@ export default function Mine() {
           justify-content: space-between;
           justify-items: start;
           align-items: center;
+          padding-bottom: 10px;
 
           p {
             margin: 0;
@@ -59,10 +60,22 @@ export default function Mine() {
         }
       }}
     >
-      {/* <header className="header">
+      <header className="header">
         <div>
-          <p>xxx在看什么</p>
-          <p>
+          <p
+            css={css`
+              font-weight: 700;
+              font-size: 16px;
+            `}
+          >
+            xxx在看什么
+          </p>
+          <p
+            css={css`
+              opacity: 0.7;
+              font-size: 12px;
+            `}
+          >
             订阅者 0<span className="copy">复制订阅链接</span>
           </p>
         </div>
@@ -71,9 +84,15 @@ export default function Mine() {
             justify-self: center;
           `}
         >
-          <SetOutline />
+          <SetOutline
+            css={css`
+              height: 20px;
+              width: 20px;
+            `}
+          />
         </div>
-      </header> */}
+      </header>
+
       <div>
         {totalData.map((item) => {
           return (

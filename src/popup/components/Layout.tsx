@@ -29,9 +29,6 @@ export default function Layout() {
             login
           </Button>
         </header> */}
-        {/* <header>
-          <SharePopup />
-        </header> */}
         <Outlet />
       </main>
       <Meun />

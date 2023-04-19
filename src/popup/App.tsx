@@ -76,7 +76,7 @@ function App() {
           <Route path="mine" element={<Mine />} />
           <Route path="follow" element={<Follow />} />
           {/* path="user/:id/:name" */}
-          <Route path="user/:id/:name" element={<User />} />
+          <Route index element={<User />} />
         </Route>
       </Routes>
     </MemoryRouter>

@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { Button } from "antd-mobile";
+import { Button, NavBar } from "antd-mobile";
 import { LeftOutline } from "antd-mobile-icons";
 
 export default function User() {
@@ -18,16 +18,21 @@ export default function User() {
         }
       `}
     >
-      <header className="header">
-        <div className="arrow">
-          <LeftOutline />
+      <NavBar
+        onBack={() => {
+          console.log("back");
+        }}
+        right={
+          <Button color="success" size="mini">
+            关注
+          </Button>
+        }
+      >
+        <div>
+          <div>xxx 在看什么</div>
+          <div className="my-nav-bar-subtitle">关注数</div>
         </div>
-
-        <h4>xxx 在关注什么</h4>
-        <Button color="success" size="mini">
-          关注
-        </Button>
-      </header>
+      </NavBar>
       <main>content</main>
     </div>
   );
