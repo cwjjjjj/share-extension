@@ -7,6 +7,7 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
   viewed: number;
+  image?: string;
 }
 
 export interface User {
