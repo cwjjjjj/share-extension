@@ -14,6 +14,8 @@ export interface User {
   id: string;
   // 内部用户
   isBeta: boolean;
+  nickname?: string;
+  avatar?: string;
 }
 
 export interface CreatePost extends Partial<Post> {

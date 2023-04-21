@@ -18,4 +18,9 @@ export const SUBSCRIBE_LIST = "subscribe/list";
 
 export const SUBSCRIBE_REMOVE = "subscribe/remove";
 
+// user
 export const USER_PROFILE = "user/profile";
+
+export const PROFILE_UPDATE = "user/profile/update";
+
+export const AVATAR_LIST = "user/asset/avatars";

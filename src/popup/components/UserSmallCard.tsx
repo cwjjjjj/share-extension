@@ -34,8 +34,8 @@ export default function UserSmallCard({
       }}
       {...props}
     >
-      <Avatar src={MOCK_IMG} />
-      <span>大头</span>
+      <Avatar src={data?.avatar} />
+      <span>{data?.nickname}</span>
       {timeFromNow && <span>{timeFromNow}</span>}
     </div>
   );

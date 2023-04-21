@@ -65,17 +65,19 @@ import Explore from "./pages/Explore";
 import Follow from "./pages/Follow";
 import Login from "./pages/Login";
 import User from "./pages/User";
+import ProfileSetting from "./pages/ProfileSetting";
 
 function App() {
   return (
     <MemoryRouter basename="/">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Login />} />
+          <Route path="login" element={<Login />} />
           <Route path="explore" element={<Explore />} />
           <Route path="mine" element={<Mine />} />
-          <Route path="follow" element={<Follow />} />
+          <Route index element={<Follow />} />
           <Route path="user/:id/:name" element={<User />} />
+          <Route path="profile-setting" element={<ProfileSetting />} />
         </Route>
       </Routes>
     </MemoryRouter>

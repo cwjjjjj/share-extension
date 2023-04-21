@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 import { UrlData } from "../components/PreviewUrl";
+import { User } from "../types";
 
 export const sharePopupState = atom({
   key: "sharePopupState",
@@ -9,4 +10,9 @@ export const sharePopupState = atom({
 export const currentHtmlInfoState = atom<UrlData>({
   key: "currentHtmlInfoState",
   default: {},
+});
+
+export const userState = atom<User>({
+  key: "userState",
+  default: undefined,
 });

@@ -7,8 +7,10 @@ import { Post as PostType, PostWithUser, User } from "../types";
 import Post from "../components/Post";
 import { useQuery } from "@tanstack/react-query";
 import useLoadMore from "../hooks/useLoadMore";
+import { useNavigate } from "react-router-dom";
 
 export default function Mine() {
+  const navigator = useNavigate();
   const { hasNext, onNext, totalData, isLoading, onRefresh, onHardRefresh } =
     useLoadMore<{ limit?: number; loadMoreKey?: string }, PostWithUser>(
       [POST_LIST],
@@ -16,14 +18,6 @@ export default function Mine() {
     );
 
   const { ref, onScroll } = useLoadMoreScrollDetect(onNext);
-
-  const { data: profile } = useQuery({
-    queryKey: [USER_PROFILE],
-    queryFn: async () =>
-      get<{ success: boolean; data: User }>(USER_PROFILE).then(
-        (res) => res.data.data
-      ),
-  });
 
   return (
     <div
@@ -83,6 +77,7 @@ export default function Mine() {
           css={css`
             justify-self: center;
           `}
+          onClick={() => navigator("../profile-setting")}
         >
           <SetOutline
             css={css`

@@ -41,7 +41,7 @@ export default function Login() {
     }
     await refetch();
     setIsExpired(false);
-  }, 2000);
+  }, 5000);
 
   const loginSuccess = () => {
     Toast.show({

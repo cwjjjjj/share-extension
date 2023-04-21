@@ -8,7 +8,7 @@ const MENU_LIST = [
   //   },
   {
     name: "关注",
-    to: "follow",
+    to: "",
   },
   {
     name: "发现",
