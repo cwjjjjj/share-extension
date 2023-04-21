@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, CenterPopup, Image, Input } from "antd-mobile";
+import { Button, CenterPopup, Image, Input, Toast } from "antd-mobile";
 import { HTMLAttributes } from "react";
 import { useRecoilState } from "recoil";
 import { currentHtmlInfoState, sharePopupState } from "../store";
@@ -28,6 +28,14 @@ export default ({ children, ...props }: SharePopupProps) => {
     setCurrentTabInfo(Object.assign({}, htmlInfo, tabInfo));
   };
 
+  const sharePost = (data: any) =>
+    post(CREATE_POST, {
+      url: data.url,
+      title: data.title,
+      summary: data.description,
+      image: data?.images?.[0],
+    });
+
   useEffect(() => {
     handleHtmlInfo();
   }, []);
@@ -38,7 +46,12 @@ export default ({ children, ...props }: SharePopupProps) => {
     <div>
       <Button
         onClick={() => {
-          setVisible(true);
+          // setVisible(true);
+          sharePost(currentTabInfo).then((res) => {
+            Toast.show({
+              content: "分享成功",
+            });
+          });
         }}
       >
         share
@@ -77,18 +90,7 @@ export default ({ children, ...props }: SharePopupProps) => {
             <Image src={currentTabInfo.images[0]} fit="contain" />
           )}
         </div>
-        <Button
-          onClick={() => {
-            post(CREATE_POST, {
-              url: currentTabInfo.url,
-              title: currentTabInfo.title,
-              summary: currentTabInfo.description,
-              image: currentTabInfo?.images?.[0],
-            });
-          }}
-        >
-          确定分享
-        </Button>
+        <Button onClick={sharePost}>确定分享</Button>
       </CenterPopup>
     </div>
   );

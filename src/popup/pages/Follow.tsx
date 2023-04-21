@@ -6,7 +6,6 @@ import { useEffect } from "react";
 export default function Follow() {
   return (
     <div>
-      follow
       <header>
         <SharePopup />
       </header>

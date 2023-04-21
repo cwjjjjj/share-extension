@@ -12,6 +12,8 @@ export const REMOVE_POST = "post/remove";
 
 export const POST_LIST = "post/list";
 
+export const USER_PUBLIC_LIST = "post/public"; //?userId=xxx&loadMoreKey=yyy&limit=zzz
+
 export const SUBSCRIBE = "subscribe/create";
 
 export const SUBSCRIBE_LIST = "subscribe/list";

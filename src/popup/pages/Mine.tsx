@@ -54,6 +54,13 @@ export default function Mine() {
         }
       }}
     >
+      <button
+        onClick={() => {
+          navigator("../user/6438cccfedce67104afa5ab0/没有名字");
+        }}
+      >
+        跳转到用户页面
+      </button>
       <header className="header">
         <div>
           <p
