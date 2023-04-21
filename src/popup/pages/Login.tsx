@@ -28,13 +28,26 @@ export default function Login() {
   const [verifyCode, setVerifyCode] = useState<string>();
   const [isExpired, setIsExpired] = useState(false);
   const [loginType, setLoginType] = useState<LoginType>("qrCode");
+  const [phoneLoginStet, setPhoneLoginStet] = useState<"input" | "verify">(
+    "input"
+  );
 
   const [refetchInterval, setRefetchInterval] = useState<number | false>(1000);
+
+  const loginSuccess = () => {
+    Toast.show({
+      content: "登录成功",
+    });
+    setTimeout(() => {
+      navigator("./follow");
+    }, 2000);
+  };
 
   const {
     data: qrCodeData,
     error,
     refetch,
+    isLoading,
   } = useQuery<QRCodeData & { success: boolean }>({
     queryKey: [GET_QR_CODE],
     queryFn: async () => post(GET_QR_CODE).then((res) => res.data.data),
@@ -60,14 +73,10 @@ export default function Login() {
     onSuccess: (data) => {
       if (data.success && data.status === "done") {
         setRefetchInterval(false);
-        Toast.show({
-          content: "扫码成功",
-        });
-        setTimeout(() => {
-          navigator("./follow");
-        }, 2000);
+        loginSuccess();
       }
     },
+    enabled: loginType === "qrCode",
   });
 
   useEffect(() => {
@@ -77,6 +86,7 @@ export default function Login() {
       console.log(now, expiredTime);
       if (expiredTime && now >= expiredTime) {
         setIsExpired(true);
+        setRefetchInterval(false);
       }
     }, 1000);
 
@@ -135,33 +145,63 @@ export default function Login() {
       <main>
         {loginType === "phoneNumber" && (
           <section>
-            <div>
-              手机号：
-              <Input value={phoneNumber} onChange={setPhoneNumber} />
-              <Button
-                onClick={() => {
-                  console.log({ phoneNumber });
-                  post(SEND_VERIFY_CODE, {
-                    phoneNumber,
-                  });
-                }}
+            {phoneLoginStet === "input" && (
+              <div
+                css={css`
+                  display: grid;
+                  gap: 5px;
+                `}
               >
-                获取验证码
-              </Button>
-            </div>
-            <div>
-              <Input value={verifyCode} onChange={setVerifyCode} />
-              <Button
-                onClick={() => {
-                  post(LOGIN_OR_SIGNUP, {
-                    phoneNumber,
-                    verifyCode,
-                  });
-                }}
+                手机号：
+                <Input
+                  value={phoneNumber}
+                  onChange={setPhoneNumber}
+                  placeholder="请输入手机号"
+                  maxLength={11}
+                />
+                <Button
+                  onClick={() => {
+                    console.log({ phoneNumber });
+                    post(SEND_VERIFY_CODE, {
+                      phoneNumber,
+                    }).then((res) => {
+                      setPhoneLoginStet("verify");
+                    });
+                  }}
+                  disabled={phoneNumber?.length !== 11}
+                >
+                  获取验证码
+                </Button>
+              </div>
+            )}
+            {phoneLoginStet === "verify" && (
+              <div
+                css={css`
+                  display: grid;
+                  gap: 5px;
+                `}
               >
-                登录
-              </Button>
-            </div>
+                <Input
+                  value={verifyCode}
+                  onChange={setVerifyCode}
+                  placeholder="请输入验证码"
+                />
+                <Button
+                  onClick={() => {
+                    post(LOGIN_OR_SIGNUP, {
+                      phoneNumber,
+                      verifyCode,
+                    }).then((res) => {
+                      if (res.data.success) {
+                        loginSuccess();
+                      }
+                    });
+                  }}
+                >
+                  登录
+                </Button>
+              </div>
+            )}
           </section>
         )}
 
@@ -178,8 +218,11 @@ export default function Login() {
                 />
                 <div
                   className="refresh"
-                  onClick={() => {
-                    refetch();
+                  onClick={async () => {
+                    if (isLoading) {
+                      return;
+                    }
+                    await refetch();
                     setIsExpired(false);
                   }}
                 >
