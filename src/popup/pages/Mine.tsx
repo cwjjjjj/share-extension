@@ -5,7 +5,6 @@ import { POST_LIST, USER_PROFILE } from "../constants/api";
 import useLoadMoreScrollDetect from "../hooks/useLoadMoreScrollDetect";
 import { Post as PostType, PostWithUser, User } from "../types";
 import Post from "../components/Post";
-import { useQuery } from "@tanstack/react-query";
 import useLoadMore from "../hooks/useLoadMore";
 import { useNavigate } from "react-router-dom";
 
@@ -54,13 +53,6 @@ export default function Mine() {
         }
       }}
     >
-      <button
-        onClick={() => {
-          navigator("../user/6438cccfedce67104afa5ab0/没有名字");
-        }}
-      >
-        跳转到用户页面
-      </button>
       <header className="header">
         <div>
           <p

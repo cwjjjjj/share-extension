@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import Avatar from "./Avatar";
 import { HTMLAttributes } from "react";
 import { User } from "../types";
+import { useNavigate } from "react-router-dom";
 
 export const MOCK_IMG =
   "https://avatars.githubusercontent.com/u/22167673?s=48&v=4";
@@ -16,6 +17,8 @@ export default function UserSmallCard({
   timeFromNow,
   ...props
 }: UserSmallCardProps) {
+  const navigator = useNavigate();
+
   if (!data) {
     return null;
   }
@@ -31,6 +34,7 @@ export default function UserSmallCard({
       `}
       onClick={() => {
         console.log("click", data.id);
+        navigator(`../user/${data?.id}/${data.nickname}`);
       }}
       {...props}
     >

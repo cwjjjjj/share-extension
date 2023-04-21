@@ -22,6 +22,13 @@ export default function Post({ data, renderMore, ...props }: PostProps) {
   return (
     <div
       css={css`
+        padding: 5px;
+        margin: 5px 0;
+        transition: all 0.6s;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.25);
+        }
+
         .user-header {
           display: grid;
           grid-template-columns: 200px 30px;

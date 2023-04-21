@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { Button, NavBar } from "antd-mobile";
 import { LeftOutline } from "antd-mobile-icons";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useLoadMore from "../hooks/useLoadMore";
 import { POST_LIST, USER_PUBLIC_LIST } from "../constants/api";
 import { PostWithUser } from "../types";
@@ -12,6 +12,7 @@ import Post from "../components/Post";
 export default function User() {
   // 获取 params
   const { id, name } = useParams();
+  const navigator = useNavigate();
 
   const { hasNext, onNext, totalData, isLoading, onRefresh, onHardRefresh } =
     useLoadMore<
@@ -52,7 +53,7 @@ export default function User() {
     >
       <NavBar
         onBack={() => {
-          console.log("back");
+          navigator(-1);
         }}
         right={
           <Button color="success" size="mini">
@@ -65,7 +66,7 @@ export default function User() {
           <div className="my-nav-bar-subtitle">关注数</div>
         </div>
       </NavBar>
-      <main
+      <div
         ref={ref}
         onScroll={(e) => {
           console.log("scroll");
@@ -84,7 +85,7 @@ export default function User() {
             );
           })}
         </div>
-      </main>
+      </div>
     </div>
   );
 }
