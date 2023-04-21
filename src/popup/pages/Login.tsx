@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import QRCode from "react-qr-code";
 import { User } from "../types";
 import { UndoOutline } from "antd-mobile-icons";
+import { throttle } from "lodash";
 
 export interface QRCodeData {
   expAt: number;
@@ -33,6 +34,14 @@ export default function Login() {
   );
 
   const [refetchInterval, setRefetchInterval] = useState<number | false>(1000);
+
+  const refreQRCode = throttle(async () => {
+    if (isLoading) {
+      return;
+    }
+    await refetch();
+    setIsExpired(false);
+  }, 2000);
 
   const loginSuccess = () => {
     Toast.show({
@@ -216,16 +225,7 @@ export default function Login() {
                     filter: blur(8px);
                   `}
                 />
-                <div
-                  className="refresh"
-                  onClick={async () => {
-                    if (isLoading) {
-                      return;
-                    }
-                    await refetch();
-                    setIsExpired(false);
-                  }}
-                >
+                <div className="refresh" onClick={refreQRCode}>
                   <UndoOutline
                     css={css`
                       height: 100px;
