@@ -10,6 +10,7 @@ import { css } from "@emotion/react";
 import { post } from "../utils";
 import { CREATE_POST } from "../constants/api";
 import { CreatePost } from "../types";
+import { handleUpload } from "../utils/upload";
 
 export interface SharePopupProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -45,14 +46,26 @@ export default ({ children, ...props }: SharePopupProps) => {
   return (
     <div>
       <Button
-        onClick={() => {
+        onClick={async () => {
           // setVisible(true);
-          sharePost(currentTabInfo).then((res) => {
-            Toast.show({
-              content: "分享成功",
-            });
-          });
+          // sharePost(currentTabInfo).then((res) => {
+          //   Toast.show({
+          //     content: "分享成功",
+          //   });
+          // });
+          const url = currentTabInfo?.images?.[0];
+          console.log("image", url);
+          if (url) {
+            fetch(url)
+              .then((response) => response.blob())
+              .then((blob) => {
+                handleUpload(blob as unknown as File);
+              });
+          }
         }}
+
+        // 把图片链接转成 blob
+        // https://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
       >
         share
       </Button>
