@@ -25,6 +25,8 @@ export default function Post({ data, renderMore, ...props }: PostProps) {
         padding: 5px;
         margin: 5px 0;
         transition: all 0.6s;
+        word-break: break-all;
+
         &:hover {
           background-color: rgba(0, 0, 0, 0.25);
         }

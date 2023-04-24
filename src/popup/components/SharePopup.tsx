@@ -63,11 +63,10 @@ export default ({ children, ...props }: SharePopupProps) => {
               });
           }
         }}
-
-        // 把图片链接转成 blob
-        // https://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+        color="success"
+        size="mini"
       >
-        share
+        分享当前网页
       </Button>
       <CenterPopup
         visible={visible}
