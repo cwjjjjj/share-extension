@@ -10,6 +10,9 @@ import { handleUpload } from "../utils/upload";
 import { useNavigate } from "react-router-dom";
 import { QiniuFile } from "../@types/Qiniu";
 import Avatar from "../components/Avatar";
+import upload from "../assets/upload.svg";
+
+const prefixUrl = "https://image-qiniu.jellow.site/";
 
 export default function ProfileSetting() {
   const navigator = useNavigate();
@@ -46,7 +49,7 @@ export default function ProfileSetting() {
       });
       return;
     }
-    if (!profile.avatar && !profile.avatarFileInfo) {
+    if (!profile.avatar) {
       Toast.show({
         content: "请选择头像",
       });
@@ -56,7 +59,6 @@ export default function ProfileSetting() {
     await post(PROFILE_UPDATE, {
       nickname: profile.name,
       avatar: profile?.avatar,
-      avatarFileInfo: profile?.avatarFileInfo,
     });
     await queryClient.invalidateQueries([USER_PROFILE]);
     Toast.show({
@@ -92,9 +94,9 @@ export default function ProfileSetting() {
           border-radius: 50%;
         }
 
-        label {
+        .label {
           display: grid;
-          grid-template-columns: 60px 100px;
+          grid-template-columns: 60px 100px 150px;
           align-items: center;
         }
       `}
@@ -104,8 +106,19 @@ export default function ProfileSetting() {
           navigator(-1);
         }}
         right={
-          <Button color="success" size="mini">
-            关注
+          <Button
+            color="success"
+            size="mini"
+            onClick={() => {
+              updateProfile({
+                name: currentNickname,
+                avatar: currentAvatar,
+              }).then((res) => {
+                navigator("../explore");
+              });
+            }}
+          >
+            保存
           </Button>
         }
       >
@@ -124,36 +137,31 @@ export default function ProfileSetting() {
           grid-template-rows: 50px 50px 1fr 50px;
         `}
       >
-        <label>
+        <div className="label">
           用户名：
           <Input
             placeholder="请输入用户名"
             value={currentNickname}
             onChange={setCurrentNickname}
           />
-        </label>
-        <label>
+        </div>
+        <div className="label">
           头像：
-          <Avatar src={user.avatar} />
-        </label>
-        <section>
-          <div className="avatar-list">
-            {avatarList?.map((avatar) => (
-              <div
-                className={`avatar-wrap ${
-                  currentAvatar === avatar && "avatar-wrap-active"
-                }`}
-                onClick={() => {
-                  setCurrentAvatar(avatar);
-                }}
-                key={avatar}
-              >
-                <img src={avatar} alt="avatar" className="avatar" />
-              </div>
-            ))}
-          </div>
+          <Avatar src={currentAvatar} />
           <label>
-            上传头像
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                background: #eeeeee;
+                border-radius: 6px;
+                padding: 6px 30px;
+                cursor: pointer;
+              `}
+            >
+              <img src={upload} alt="" /> 上传头像
+            </div>
             <input
               type="file"
               id="albums"
@@ -172,23 +180,34 @@ export default function ProfileSetting() {
                   return;
                 }
                 const res = await handleUpload(files[0]);
-                setCurrentAvatar(undefined);
-                updateProfile({
-                  name: currentNickname,
-                  avatarFileInfo: res,
-                });
+                const avatarUrl = prefixUrl + res.key;
+                setCurrentAvatar(avatarUrl);
+                // updateProfile({
+                //   name: currentNickname,
+                //   avatarFileInfo: res,
+                // });
+                // updateProfile();
               }}
             />
           </label>
+        </div>
+        <section>
+          <div className="avatar-list">
+            {avatarList?.map((avatar) => (
+              <div
+                className={`avatar-wrap ${
+                  currentAvatar === avatar && "avatar-wrap-active"
+                }`}
+                onClick={() => {
+                  setCurrentAvatar(avatar);
+                }}
+                key={avatar}
+              >
+                <img src={avatar} alt="avatar" className="avatar" />
+              </div>
+            ))}
+          </div>
         </section>
-        <Button
-          color="primary"
-          onClick={() => {
-            updateProfile();
-          }}
-        >
-          确定
-        </Button>
       </div>
     </div>
   );
