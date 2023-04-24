@@ -42,10 +42,8 @@ async function refreshTokenRequest() {
       throw new Error("refresh token error");
     }
   } catch (error) {
-    if (window.location.href.indexOf("register") > -1)
-      throw new Error("please login");
     if ((error as AxiosError).response?.status === 401) {
-      window.location.replace("../floater123/register");
+      window.location.replace("./login");
     }
   }
 }
@@ -83,18 +81,18 @@ axiosInstance.interceptors.response.use(
   },
 
   async (error: AxiosError<{ success?: boolean; toast?: string }>) => {
-    // if (error.response?.status === 401) {
-    //   return new Promise(async (resolve, reject) => {
-    //     await refreshTokenRequest();
-    //     setTimeout(() => {
-    //       fillHeaders(error.config)
-    //         .then((config: any) =>
-    //           axiosInstance.request(config).then(resolve).catch(reject)
-    //         )
-    //         .catch((err) => {});
-    //     }, 1000);
-    //   });
-    // }
+    if (error.response?.status === 401) {
+      return new Promise(async (resolve, reject) => {
+        await refreshTokenRequest();
+        setTimeout(() => {
+          fillHeaders(error?.config ?? {})
+            .then((config: any) =>
+              axiosInstance.request(config).then(resolve).catch(reject)
+            )
+            .catch((err) => {});
+        }, 1000);
+      });
+    }
 
     return Promise.reject(error);
   }

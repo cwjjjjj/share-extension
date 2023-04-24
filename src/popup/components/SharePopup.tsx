@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, CenterPopup, Image, Input } from "antd-mobile";
+import { Button, CenterPopup, Image, Input, Toast } from "antd-mobile";
 import { HTMLAttributes } from "react";
 import { useRecoilState } from "recoil";
 import { currentHtmlInfoState, sharePopupState } from "../store";
@@ -7,6 +7,10 @@ import { getCurrentTab } from "../utils/getCurrentTab";
 import { getLinkPreview } from "link-preview-js";
 import { UrlData } from "./PreviewUrl";
 import { css } from "@emotion/react";
+import { post } from "../utils";
+import { CREATE_POST } from "../constants/api";
+import { CreatePost } from "../types";
+import { handleUpload } from "../utils/upload";
 
 export interface SharePopupProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -25,6 +29,14 @@ export default ({ children, ...props }: SharePopupProps) => {
     setCurrentTabInfo(Object.assign({}, htmlInfo, tabInfo));
   };
 
+  const sharePost = (data: any) =>
+    post(CREATE_POST, {
+      url: data.url,
+      title: data.title,
+      summary: data.description,
+      image: data?.images?.[0],
+    });
+
   useEffect(() => {
     handleHtmlInfo();
   }, []);
@@ -33,13 +45,29 @@ export default ({ children, ...props }: SharePopupProps) => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setVisible(true);
+      <Button
+        onClick={async () => {
+          // setVisible(true);
+          // sharePost(currentTabInfo).then((res) => {
+          //   Toast.show({
+          //     content: "分享成功",
+          //   });
+          // });
+          const url = currentTabInfo?.images?.[0];
+          console.log("image", url);
+          if (url) {
+            fetch(url)
+              .then((response) => response.blob())
+              .then((blob) => {
+                handleUpload(blob as unknown as File);
+              });
+          }
         }}
+        color="success"
+        size="mini"
       >
-        share
-      </button>
+        分享当前网页
+      </Button>
       <CenterPopup
         visible={visible}
         onMaskClick={() => {
@@ -61,6 +89,7 @@ export default ({ children, ...props }: SharePopupProps) => {
               height: 20px;
               width: 20px;
             `}
+            // @ts-ignore
             src={currentTabInfo?.favIconUrl ?? currentTabInfo?.favicons?.[0]}
             alt=""
           />
@@ -73,6 +102,7 @@ export default ({ children, ...props }: SharePopupProps) => {
             <Image src={currentTabInfo.images[0]} fit="contain" />
           )}
         </div>
+        <Button onClick={sharePost}>确定分享</Button>
       </CenterPopup>
     </div>
   );

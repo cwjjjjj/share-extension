@@ -8,7 +8,7 @@ const MENU_LIST = [
   //   },
   {
     name: "关注",
-    to: "follow",
+    to: "",
   },
   {
     name: "发现",
@@ -23,7 +23,14 @@ const MENU_LIST = [
 export default function Meun() {
   const navigator = useNavigate();
   return (
-    <div>
+    <div
+      css={css`
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      `}
+    >
       <hr />
       <div
         css={css`
@@ -33,6 +40,8 @@ export default function Meun() {
           grid-template-columns: repeat(3, 1fr);
           align-items: center;
           justify-items: center;
+          background-color: rgba(0, 0, 0, 0.25);
+          backdrop-filter: blur(15px);
 
           .menu {
             cursor: pointer;

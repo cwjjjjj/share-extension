@@ -1,55 +1,101 @@
 import { css } from "@emotion/react";
 import UserSmallCard, { MOCK_IMG } from "./UserSmallCard";
 import { Popover } from "antd-mobile";
-export default function Post() {
+import { HTMLAttributes, ReactNode } from "react";
+import { PostWithUser } from "../types";
+import day from "../utils/day";
+
+export interface PostProps extends HTMLAttributes<HTMLDivElement> {
+  data: PostWithUser;
+  renderMore: ReactNode;
+}
+
+export default function Post({ data, renderMore, ...props }: PostProps) {
+  const { user, title, url, summary, image, scope, viewed, updatedAt } =
+    data ?? {};
+  console.log("data", data);
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <div
       css={css`
-        .header {
+        padding: 5px;
+        margin: 5px 0;
+        transition: all 0.6s;
+        word-break: break-all;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.25);
+        }
+
+        .user-header {
           display: grid;
-          grid-template-columns: 1fr 30px;
+          grid-template-columns: 200px 30px;
+          justify-content: space-between;
           align-items: center;
+          justify-items: start;
+          white-space: nowrap;
         }
         .more {
           cursor: pointer;
+          justify-self: center;
         }
         .img {
           width: 100%;
           height: 200px;
           object-fit: contain;
         }
+        p,
+        h5 {
+          margin: 0;
+          padding: 4px 0;
+        }
+        main {
+          cursor: pointer;
+          margin: 0 0 10px 0;
+        }
       `}
+      {...props}
     >
-      <header className="header">
-        <UserSmallCard />
-        <Popover
-          content={
-            <section
-              css={css`
-                display: grid;
-                gap: 5px;
-                padding: 10px;
+      <header className="user-header">
+        <UserSmallCard data={user} timeFromNow={day(updatedAt).fromNow()} />
+        {renderMore && (
+          <Popover
+            content={
+              <section
+                css={css`
+                  display: grid;
+                  gap: 5px;
+                  padding: 10px;
 
-                .item {
-                  padding: 5px 0;
-                }
-              `}
-            >
-              <div className="item">取消关注</div>
-              <div className="item">取消关注</div>
-              <div className="item">取消关注</div>
-            </section>
-          }
-          trigger="click"
-          placement="right"
-          defaultVisible
-        >
-          <div className="more">···</div>
-        </Popover>
+                  .item {
+                    padding: 5px 0;
+                  }
+                `}
+              >
+                {renderMore}
+              </section>
+            }
+            trigger="click"
+            placement="right"
+            defaultVisible={false}
+          >
+            <div className="more">···</div>
+          </Popover>
+        )}
       </header>
-      <h5>这是一个标题</h5>
-      <p>这是一段描述</p>
-      <img src={MOCK_IMG} alt="img" className="img" />
+      <main
+        onClick={() => {
+          window.open(url);
+        }}
+      >
+        <h5>{title}</h5>
+        <p>{summary}</p>
+        {image && <img src={image} alt="img" className="img" />}
+      </main>
     </div>
   );
 }
